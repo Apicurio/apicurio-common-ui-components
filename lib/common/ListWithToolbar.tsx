@@ -45,7 +45,7 @@ export const ListWithToolbar: FunctionComponent<ListWithToolbarProps> = (
     return (
         <React.Fragment>
             <If condition={showToolbar} children={toolbar} />
-            <IfNotLoading condition={isLoading} loadingComponent={loadingComponent}>
+            <IfNotLoading isLoading={isLoading} loadingComponent={loadingComponent}>
                 <If condition={!isEmpty && !isError} children={children} />
                 <If condition={isEmpty && isFiltered && !isError} children={filteredEmptyState} />
                 <If condition={isEmpty && !isFiltered && !isError} children={emptyState} />

@@ -4,9 +4,9 @@ import { IfEmptyDemo } from "./demos/IfEmptyDemo.tsx";
 import { PleaseWaitModalDemo } from "./demos/PleaseWaitModalDemo.tsx";
 import { ProgressModalDemo } from "./demos/ProgressModalDemo.tsx";
 import { IfNotLoadingDemo } from "./demos/IfNotLoadingDemo.tsx";
-import {ObjectDropdownDemo} from "./demos/ObjectDropdownDemo.tsx";
-import {ObjectSelectDemo} from "./demos/ObjectSelectDemo.tsx";
-import {AppAboutModalDemo} from "./demos/AppAboutModalDemo.tsx";
+import { ObjectDropdownDemo } from "./demos/ObjectDropdownDemo.tsx";
+import { ObjectSelectDemo } from "./demos/ObjectSelectDemo.tsx";
+import { AppAboutModalDemo } from "./demos/AppAboutModalDemo.tsx";
 
 export type Demo = {
     name: string;
