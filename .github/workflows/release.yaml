@@ -1,0 +1,40 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      release-version:
+        description: 'Version being released'
+        required: true
+
+jobs:
+  release:
+    name: Verify Build & Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Check Node Version
+        run: node --version
+
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Project
+        run: |
+          npm install
+          npm run lint
+          npm run build
+
+      - name: Set version in package.json
+        run: |
+          npm version ${{ github.event.inputs.release-version }}
+
+      - name: Publish to npmjs.com
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish --access public
