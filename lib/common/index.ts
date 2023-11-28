@@ -1,3 +1,4 @@
+export * from "./If";
 export * from "./IfNotEmpty";
 export * from "./IfNotLoading";
 export * from "./ListWithToolbar";
