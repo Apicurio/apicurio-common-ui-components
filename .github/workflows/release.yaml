@@ -25,7 +25,7 @@ jobs:
           git init
           git config --global user.name "apicurio-ci"
           git config --global user.email "apicurio.ci@gmail.com"
-          git branch --set-upstream-to=origin/${{ github.event.inputs.branch}}
+          git branch --set-upstream-to=origin/main
           git pull
           echo "#### Listing files ####"
           find .
