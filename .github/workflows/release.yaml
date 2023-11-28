@@ -20,8 +20,19 @@ jobs:
       - name: Check Node Version
         run: node --version
 
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - name: Configure Git
+        run: |
+          git init
+          git config --global user.name "apicurio-ci"
+          git config --global user.email "apicurio.ci@gmail.com"
+          git branch --set-upstream-to=origin/${{ github.event.inputs.branch}}
+          git pull
+          echo "#### Listing files ####"
+          find .
+
+      - name: Set release version in package.json
+        run: |
+          npm version ${{ github.event.inputs.release-version }}
 
       - name: Build Project
         run: |
@@ -29,12 +40,45 @@ jobs:
           npm run lint
           npm run build
 
-      - name: Set version in package.json
+      - name: Commit Release Version Change
         run: |
-          npm version ${{ github.event.inputs.release-version }}
+          git add .
+          git commit -m "Automated version update: ${{ github.event.inputs.release-version}}"
+          git push
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.release-version}}
 
       - name: Publish to npmjs.com
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm publish --access public
+
+      - name: Set DEV version in package.json
+        run: |
+          npm version DEV
+
+      - name: Commit DEV Version Change
+        run: |
+          git add .
+          git commit -m"Automated version update: DEV"
+          git push
+
+      - name: Google Chat Notification (Always)
+        if: always()
+        uses: Co-qn/google-chat-notification@b9227d9daa4638c9782a5bd16c4abb86268127a1
+        with:
+          name: ${{ github.job }}
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+
+      - name: Google Chat Notification (Error)
+        if: failure()
+        uses: Co-qn/google-chat-notification@b9227d9daa4638c9782a5bd16c4abb86268127a1
+        with:
+          name: ${{ github.job }}
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK_ERRORS }}
+          status: ${{ job.status }}
