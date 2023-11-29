@@ -9,6 +9,7 @@ import { ObjectSelectDemo } from "./demos/ObjectSelectDemo.tsx";
 import { AppAboutModalDemo } from "./demos/AppAboutModalDemo.tsx";
 import { ListWithToolbarDemo } from "./demos/ListWithToolbarDemo.tsx";
 import { UrlUploadDemo } from "./demos/UrlUploadDemo.tsx";
+import { ResponsiveTableDemo } from "./demos/ResponsiveTableDemo.tsx";
 
 export type Demo = {
     name: string;
@@ -74,5 +75,12 @@ export const ALL_DEMOS: Demos = {
             description: "A modal that can show the progress (e.g. from 0 to 100) of some async operation.",
             component: <ProgressModalDemo/>
         },
-    ]
+    ],
+    "Tables": [
+        {
+            name: "ResponsiveTable",
+            description: "A table implementation by Riccardo Forina that has a bunch of features and is responsive.",
+            component: <ResponsiveTableDemo/>
+        },
+    ],
 };
