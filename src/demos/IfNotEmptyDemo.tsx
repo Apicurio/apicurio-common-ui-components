@@ -11,7 +11,7 @@ import {
 import { IfNotEmpty } from "../../lib/common";
 import { CubesIcon } from "@patternfly/react-icons";
 
-export const IfEmptyDemo: FunctionComponent<any> = () => {
+export const IfNotEmptyDemo: FunctionComponent<any> = () => {
     const [collection, setCollection] = useState(["1", "2", "3"]);
 
     const onCollectionChange = (newValue: string): void => {
