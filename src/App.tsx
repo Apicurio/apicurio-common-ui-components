@@ -88,6 +88,7 @@ function App() {
             return (
                 <NavExpandable
                     title={group}
+                    key={idx}
                     groupId={`nav-expandable-group-${idx}`}
                     isExpanded
                 >

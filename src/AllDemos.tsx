@@ -8,6 +8,7 @@ import { ObjectDropdownDemo } from "./demos/ObjectDropdownDemo.tsx";
 import { ObjectSelectDemo } from "./demos/ObjectSelectDemo.tsx";
 import { AppAboutModalDemo } from "./demos/AppAboutModalDemo.tsx";
 import { ListWithToolbarDemo } from "./demos/ListWithToolbarDemo.tsx";
+import { UrlUploadDemo } from "./demos/UrlUploadDemo.tsx";
 
 export type Demo = {
     name: string;
@@ -50,6 +51,11 @@ export const ALL_DEMOS: Demos = {
             name: "ObjectSelect",
             description: "An easier way to model a select input of objects.  This differs from a dropdown, which is a menu.  This component is an input.",
             component: <ObjectSelectDemo/>
+        },
+        {
+            name: "UrlUpload",
+            description: "A component similar to the Patternfly FileUpload, but meant for choosing URLs instead of files.",
+            component: <UrlUploadDemo/>
         },
     ],
     "Modals": [
