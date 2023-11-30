@@ -20,6 +20,7 @@ export type ObjectDropdownProps = {
     itemToString: (value: any) => string;
     itemIsDivider?: (value: any) => boolean;
     itemIsVisible?: (value: any) => boolean;
+    itemIsDisabled?: (value: any) => boolean;
     itemToTestId?: (value: any) => string;
     noSelectionLabel?: string;
     menuAppendTo?: HTMLElement | (() => HTMLElement) | "inline";
@@ -100,6 +101,7 @@ export const ObjectDropdown: FunctionComponent<ObjectDropdownProps> = (props: Ob
                                 <DropdownItem
                                     value={index}
                                     key={`action-${index}`}
+                                    isDisabled={props.itemIsDisabled === undefined ? false : props.itemIsDisabled(item) }
                                     component={props => <button {...props} data-testid={itemToTestId(item)} />}
                                 >
                                     { props.itemToString(item) }
