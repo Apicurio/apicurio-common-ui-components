@@ -19,6 +19,7 @@ export type ObjectDropdownProps = {
     onSelect: (value: any | undefined) => void;
     itemToString: (value: any) => string;
     itemIsDivider?: (value: any) => boolean;
+    itemIsVisible?: (value: any) => boolean;
     itemToTestId?: (value: any) => string;
     noSelectionLabel?: string;
     menuAppendTo?: HTMLElement | (() => HTMLElement) | "inline";
@@ -89,6 +90,9 @@ export const ObjectDropdown: FunctionComponent<ObjectDropdownProps> = (props: Ob
             <DropdownList>
                 {
                     props.items.map((item, index) => {
+                        if (props.itemIsVisible !== undefined && !props.itemIsVisible(item)) {
+                            return <></>;
+                        }
                         return (
                             (props.itemIsDivider && props.itemIsDivider(item)) ?
                                 <Divider component="li" key={`divider-${index}`} />

@@ -21,6 +21,8 @@ export default defineConfig({
                 "react",
                 "react-dom",
                 "react/jsx-runtime",
+                "luxon",
+                "use-resize-observer",
                 "@patternfly/patternfly",
                 "@patternfly/react-core",
                 "@patternfly/react-icons",

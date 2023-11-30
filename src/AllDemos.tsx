@@ -10,6 +10,8 @@ import { AppAboutModalDemo } from "./demos/AppAboutModalDemo.tsx";
 import { ListWithToolbarDemo } from "./demos/ListWithToolbarDemo.tsx";
 import { UrlUploadDemo } from "./demos/UrlUploadDemo.tsx";
 import { ResponsiveTableDemo } from "./demos/ResponsiveTableDemo.tsx";
+import { ToggleIconDemo } from "./demos/ToggleIconDemo.tsx";
+import { DateTimeDemo } from "./demos/DateTimeDemo.tsx";
 
 export type Demo = {
     name: string;
@@ -23,6 +25,11 @@ export type Demos = {
 
 export const ALL_DEMOS: Demos = {
     "Common Types": [
+        {
+            name: "DateTime",
+            description: "Component to display a string or Date object in a UI, with different formatting options.",
+            component: <DateTimeDemo/>
+        },
         {
             name: "If",
             description: "Wraps some children and shows them only when the condition is true.",
@@ -52,6 +59,11 @@ export const ALL_DEMOS: Demos = {
             name: "ObjectSelect",
             description: "An easier way to model a select input of objects.  This differs from a dropdown, which is a menu.  This component is an input.",
             component: <ObjectSelectDemo/>
+        },
+        {
+            name: "ToggleIcon",
+            description: "A simple toggle icon, used to expand/collapse a UI section.",
+            component: <ToggleIconDemo/>
         },
         {
             name: "UrlUpload",
