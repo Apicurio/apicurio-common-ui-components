@@ -15,15 +15,15 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "peerDependencies": {
-    "@patternfly/patternfly": ">=5.1.0",
-    "@patternfly/react-core": ">=5.1.1",
-    "@patternfly/react-icons": ">=5.1.1",
-    "@patternfly/react-table": ">=5.1.1",
-    "luxon": ">=3.4.4",
-    "react": ">=18.2.0",
-    "react-dom": ">=18.2.0",
-    "react-router-dom": ">=6.20.1",
-    "use-resize-observer": ">=9.1.0"
+    "@patternfly/patternfly": "~5",
+    "@patternfly/react-core": "~5",
+    "@patternfly/react-icons": "~5",
+    "@patternfly/react-table": "~5",
+    "luxon": "~3",
+    "react": "~18",
+    "react-dom": "~18",
+    "react-router-dom": "~6",
+    "use-resize-observer": "~9"
   },
   "devDependencies": {
     "@apicurio/eslint-config": "0.2.0",
