@@ -18,15 +18,15 @@ export default defineConfig({
         },
         rollupOptions: {
             external: [
-                "react",
-                "react-dom",
-                "react/jsx-runtime",
-                "luxon",
-                "use-resize-observer",
                 "@patternfly/patternfly",
                 "@patternfly/react-core",
                 "@patternfly/react-icons",
-                "@patternfly/react-table"
+                "@patternfly/react-table",
+                "luxon",
+                "react",
+                "react-dom",
+                "react/jsx-runtime",
+                "use-resize-observer",
             ]
         }
     }
