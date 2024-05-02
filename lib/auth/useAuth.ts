@@ -79,6 +79,40 @@ const oidc_getUsername = async (): Promise<string> => {
     return Promise.resolve(user?.profile.preferred_username as string);
 };
 
+/** ********************************
+ * Basic auth implementation
+ ** ******************************** */
+
+let username: string | undefined = undefined;
+let password: string | undefined = undefined;
+
+const basic_login = async (): Promise<void> => {
+    try {
+        console.debug("[Auth] Logging in using BasicAuth");
+        // TODO inject those values
+        username = "alice";
+        password = "alice";
+        //  TODO do a test call
+    } catch (e) {
+        console.error("[Auth] Error logging in using BasicAuth: ", e);
+        username = undefined;
+        password = undefined;
+    }
+};
+
+const basic_logout = async (): Promise<void> => {
+    username = undefined;
+    password = undefined;
+    return;
+};
+
+const basic_isAuthenticated = async (): Promise<boolean> => {
+    return username !== undefined && password !== undefined;
+};
+
+const basic_getUsername = async (): Promise<string> => {
+    return Promise.resolve(username!);
+};
 
 /** ********************************
  * AuthService interface and hook.
@@ -112,6 +146,15 @@ export const useAuth: () => AuthService = (): AuthService => {
             getUsername: oidc_getUsername,
             login: oidc_login,
             logout: oidc_logout
+        };
+    } else if (config.type === "basic") {
+        return {
+            isAuthEnabled: () => true,
+            isAuthenticated: basic_isAuthenticated,
+            getToken: () => Promise.resolve(undefined),
+            getUsername: basic_getUsername,
+            login: basic_login,
+            logout: basic_logout
         };
     }
 
