@@ -126,7 +126,7 @@ export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) 
                         >
                             <TextInput
                                 isRequired={true}
-                                type="password"
+                                type="text"
                                 id="form-password"
                                 data-testid="basic-auth-login-modal-username"
                                 name="form-password"
