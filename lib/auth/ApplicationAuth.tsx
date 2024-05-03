@@ -48,6 +48,7 @@ export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) 
 
     const basicAuthLogin = (): void => {
         console.info("[ApplicationAuth] Using username and password.");
+        auth.login(authState.username, authState.password);
         setAuthState({
             ...authState,
             state: AuthState.AUTHENTICATED
@@ -101,7 +102,7 @@ export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) 
                     aria-label="please-wait-modal"
                     style={{ marginTop: "-15px" }}
                     actions={[
-                        <Button key="edit" variant="primary" data-testid="modal-btn-edit" onClick={basicAuthLogin} isDisabled={authState.username === "" || authState.password === ""}>Login</Button>
+                        <Button key="login" variant="primary" data-testid="modal-btn-login" onClick={basicAuthLogin} isDisabled={authState.username === "" || authState.password === ""}>Login</Button>
                     ]}
                 >
                     <Form>

@@ -100,6 +100,7 @@ const basic_logout = async (): Promise<void> => {
     console.debug("[Auth] Logout for BasicAuth");
     username = undefined;
     password = undefined;
+    window.location.reload();
     return;
 };
 
@@ -111,9 +112,25 @@ const basic_getUsername = async (): Promise<string> => {
     return Promise.resolve(username!);
 };
 
+const basic_getUsernameAndPassword = (): UsernameAndPassword | undefined => {
+    if (username !== undefined && password != undefined) {
+        return {
+            username: username,
+            password: password
+        };
+    } else {
+        return undefined;
+    }
+};
+
 /** ********************************
  * AuthService interface and hook.
  ** ******************************** */
+
+export interface UsernameAndPassword {
+  username: string;
+  password: string;
+}
 
 export interface AuthService {
     isOidcAuthEnabled: () => boolean;
@@ -121,6 +138,7 @@ export interface AuthService {
     isAuthenticated: () => Promise<boolean>;
     getUsername: () => Promise<string | undefined>;
     getToken: () => Promise<string | undefined>;
+    getUsernameAndPassword: () => UsernameAndPassword | undefined;
     login: (username: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -142,6 +160,7 @@ export const useAuth: () => AuthService = (): AuthService => {
             isBasicAuthEnabled: () => false,
             isAuthenticated: oidc_isAuthenticated,
             getToken: oidc_getToken,
+            getUsernameAndPassword: () => undefined,
             getUsername: oidc_getUsername,
             login: oidc_login,
             logout: oidc_logout
@@ -152,6 +171,7 @@ export const useAuth: () => AuthService = (): AuthService => {
             isBasicAuthEnabled: () => true,
             isAuthenticated: basic_isAuthenticated,
             getToken: () => Promise.resolve(undefined),
+            getUsernameAndPassword: basic_getUsernameAndPassword,
             getUsername: basic_getUsername,
             login: basic_login,
             logout: basic_logout
@@ -165,6 +185,7 @@ export const useAuth: () => AuthService = (): AuthService => {
         isAuthenticated: () => Promise.resolve(false),
         getToken: () => Promise.resolve(undefined),
         getUsername: () => Promise.resolve(undefined),
+        getUsernameAndPassword: () => undefined,
         login: () => Promise.resolve(),
         logout: () => Promise.resolve()
     };
