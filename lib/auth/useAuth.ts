@@ -86,21 +86,18 @@ const oidc_getUsername = async (): Promise<string> => {
 let username: string | undefined = undefined;
 let password: string | undefined = undefined;
 
-const basic_login = async (): Promise<void> => {
+const basic_login = async (usernameValue: string, passwordValue: string): Promise<void> => {
     try {
-        console.debug("[Auth] Logging in using BasicAuth");
-        // TODO inject those values
-        username = "alice";
-        password = "alice";
-        //  TODO do a test call
+        console.debug("[Auth] Setting Username and Password for BasicAuth");
+        username = usernameValue;
+        password = passwordValue;
     } catch (e) {
         console.error("[Auth] Error logging in using BasicAuth: ", e);
-        username = undefined;
-        password = undefined;
     }
 };
 
 const basic_logout = async (): Promise<void> => {
+    console.debug("[Auth] Logout for BasicAuth");
     username = undefined;
     password = undefined;
     return;
@@ -119,11 +116,12 @@ const basic_getUsername = async (): Promise<string> => {
  ** ******************************** */
 
 export interface AuthService {
-    isAuthEnabled: () => boolean;
+    isOidcAuthEnabled: () => boolean;
+    isBasicAuthEnabled: () => boolean;
     isAuthenticated: () => Promise<boolean>;
     getUsername: () => Promise<string | undefined>;
     getToken: () => Promise<string | undefined>;
-    login: () => Promise<void>;
+    login: (username: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
 }
 
@@ -140,7 +138,8 @@ export const useAuth: () => AuthService = (): AuthService => {
             userManager = oidc_createUserManager(config.options);
         }
         return {
-            isAuthEnabled: () => true,
+            isOidcAuthEnabled: () => true,
+            isBasicAuthEnabled: () => false,
             isAuthenticated: oidc_isAuthenticated,
             getToken: oidc_getToken,
             getUsername: oidc_getUsername,
@@ -149,7 +148,8 @@ export const useAuth: () => AuthService = (): AuthService => {
         };
     } else if (config.type === "basic") {
         return {
-            isAuthEnabled: () => true,
+            isOidcAuthEnabled: () => false,
+            isBasicAuthEnabled: () => true,
             isAuthenticated: basic_isAuthenticated,
             getToken: () => Promise.resolve(undefined),
             getUsername: basic_getUsername,
@@ -160,7 +160,8 @@ export const useAuth: () => AuthService = (): AuthService => {
 
     // Default: no auth
     return {
-        isAuthEnabled: () => false,
+        isOidcAuthEnabled: () => false,
+        isBasicAuthEnabled: () => false,
         isAuthenticated: () => Promise.resolve(false),
         getToken: () => Promise.resolve(undefined),
         getUsername: () => Promise.resolve(undefined),
