@@ -1,13 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { Button, EmptyState, EmptyStateBody, EmptyStateHeader, EmptyStateIcon, Form, FormGroup, Modal, Spinner, TextInput } from "@patternfly/react-core";
 import { ErrorCircleOIcon } from "@patternfly/react-icons";
-import { AuthService, useAuth } from "./useAuth.ts";
+import { AuthService, UsernameAndPassword, useAuth } from "./useAuth.ts";
 import { If } from "../common";
 
 export interface AuthStateData {
     state: AuthState;
-    username: string;
-    password: string;
+    creds: UsernameAndPassword;
 }
 
 enum AuthState {
@@ -27,28 +26,36 @@ export type AuthProps = {
 export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) => {
     const [authState, setAuthState] = useState<AuthStateData>({
         state: AuthState.AUTHENTICATING,
-        username: "",
-        password: ""
+        creds: {
+            username: "",
+            password: ""
+        }
     });
     const auth: AuthService = useAuth();
 
     const onUsernameChange = (_event: any, value: string): void => {
         setAuthState({
             ...authState,
-            username: value
+            creds: {
+                ...authState.creds,
+                username: value
+            }
         });
     };
 
     const onPasswordChange = (_event: any, value: string): void => {
         setAuthState({
             ...authState,
-            password: value
+            creds: {
+                ...authState.creds,
+                password: value
+            }
         });
     };
 
     const basicAuthLogin = (): void => {
         console.info("[ApplicationAuth] Using username and password.");
-        auth.login(authState.username, authState.password);
+        auth.login(authState.creds.username, authState.creds.password);
         setAuthState({
             ...authState,
             state: AuthState.AUTHENTICATED
@@ -102,7 +109,7 @@ export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) 
                     aria-label="please-wait-modal"
                     style={{ marginTop: "-15px" }}
                     actions={[
-                        <Button key="login" variant="primary" data-testid="modal-btn-login" onClick={basicAuthLogin} isDisabled={authState.username === "" || authState.password === ""}>Login</Button>
+                        <Button key="login" variant="primary" data-testid="modal-btn-login" onClick={basicAuthLogin} isDisabled={authState.creds.username === "" || authState.creds.password === ""}>Login</Button>
                     ]}
                 >
                     <Form>
@@ -116,7 +123,7 @@ export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) 
                                 id="form-username"
                                 data-testid="basic-auth-login-modal-username"
                                 name="form-username"
-                                value={authState.username}
+                                value={authState.creds.username}
                                 placeholder="Username"
                                 onChange={onUsernameChange}
                             />
@@ -131,7 +138,7 @@ export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) 
                                 id="form-password"
                                 data-testid="basic-auth-login-modal-password"
                                 name="form-password"
-                                value={authState.password}
+                                value={authState.creds.password}
                                 placeholder="Password"
                                 onChange={onPasswordChange}
                             />
