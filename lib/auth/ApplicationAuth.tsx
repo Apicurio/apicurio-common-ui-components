@@ -5,10 +5,6 @@ import { AuthService, UsernameAndPassword, useAuth } from "./useAuth.ts";
 import { If } from "../common";
 import { BasicAuthModal } from "../modals/BasicAuthModal.tsx";
 
-export interface AuthStateData {
-    state: AuthState;
-}
-
 enum AuthState {
     AUTHENTICATING, AUTHENTICATED, AUTHENTICATION_FAILED
 }
@@ -24,49 +20,35 @@ export type AuthProps = {
  * Protect the application with OIDC authentication.
  */
 export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) => {
-    const [authState, setAuthState] = useState<AuthStateData>({
-        state: AuthState.AUTHENTICATING
-    });
+    const [authState, setAuthState] = useState<AuthState>(AuthState.AUTHENTICATING);
     const auth: AuthService = useAuth();
 
     const basicAuthLogin = (creds: UsernameAndPassword): void => {
         console.info("[ApplicationAuth] Using username and password.");
         auth.login(creds.username, creds.password);
-        setAuthState({
-            ...authState,
-            state: AuthState.AUTHENTICATED
-        });
+        setAuthState(AuthState.AUTHENTICATED);
     };
 
     useEffect(() => {
         if (auth.isOidcAuthEnabled()) {
             auth.login("", "").then(() => {
                 console.info("[ApplicationAuth] Authentication successful.");
-                setAuthState({
-                    ...authState,
-                    state: AuthState.AUTHENTICATED
-                });
+                setAuthState(AuthState.AUTHENTICATED);
             }).catch(error => {
                 // TODO display the auth error
                 console.error("[ApplicationAuth] Authentication failed: ", error);
-                setAuthState({
-                    ...authState,
-                    state: AuthState.AUTHENTICATION_FAILED
-                });
+                setAuthState(AuthState.AUTHENTICATION_FAILED);
             });
         } else if (auth.isBasicAuthEnabled()) {
             // DO NOTHING
         } else {
-            setAuthState({
-                ...authState,
-                state: AuthState.AUTHENTICATED
-            });
+            setAuthState(AuthState.AUTHENTICATED);
         }
     }, []);
 
     return (
         <>
-            <If condition={authState.state === AuthState.AUTHENTICATING && auth.isOidcAuthEnabled()}>
+            <If condition={authState === AuthState.AUTHENTICATING && auth.isOidcAuthEnabled()}>
                 <EmptyState>
                     <EmptyStateHeader titleText="Loading" headingLevel="h4" />
                     <EmptyStateBody>
@@ -74,10 +56,10 @@ export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) 
                     </EmptyStateBody>
                 </EmptyState>
             </If>
-            <If condition={authState.state === AuthState.AUTHENTICATING && auth.isBasicAuthEnabled()}>
+            <If condition={authState === AuthState.AUTHENTICATING && auth.isBasicAuthEnabled()}>
                 <BasicAuthModal onLogin={basicAuthLogin}></BasicAuthModal>
             </If>
-            <If condition={authState.state === AuthState.AUTHENTICATION_FAILED}>
+            <If condition={authState === AuthState.AUTHENTICATION_FAILED}>
                 <EmptyState>
                     <EmptyStateHeader titleText="Empty state" headingLevel="h4" icon={<EmptyStateIcon icon={ErrorCircleOIcon} />} />
                     <EmptyStateBody>
@@ -85,7 +67,7 @@ export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) 
                     </EmptyStateBody>
                 </EmptyState>
             </If>
-            <If condition={authState.state === AuthState.AUTHENTICATED} children={props.children} />
+            <If condition={authState === AuthState.AUTHENTICATED} children={props.children} />
         </>
     );
 };

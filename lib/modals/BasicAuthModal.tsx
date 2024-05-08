@@ -3,7 +3,8 @@ import { Button, Form, FormGroup, Modal, TextInput } from "@patternfly/react-cor
 import { UsernameAndPassword } from "../auth";
 
 type BasicAuthState = {
-    creds: UsernameAndPassword
+    username: string,
+    password: string,
 }
 
 /**
@@ -18,33 +19,25 @@ export type BasicAuthModalProps = {
  */
 export const BasicAuthModal: FunctionComponent<BasicAuthModalProps> = (props: BasicAuthModalProps) => {
     const [authState, setAuthState] = useState<BasicAuthState>({
-        creds: {
-            username: "",
-            password: ""
-        }
+        username: "",
+        password: "",
     });
 
     const onLogin = (): void => {
-        props.onLogin(authState.creds);
+        props.onLogin(authState);
     };
 
     const onUsernameChange = (_event: any, value: string): void => {
         setAuthState({
             ...authState,
-            creds: {
-                ...authState.creds,
-                username: value
-            }
+            username: value
         });
     };
 
     const onPasswordChange = (_event: any, value: string): void => {
         setAuthState({
             ...authState,
-            creds: {
-                ...authState.creds,
-                password: value
-            }
+            password: value
         });
     };
 
@@ -59,7 +52,7 @@ export const BasicAuthModal: FunctionComponent<BasicAuthModalProps> = (props: Ba
             aria-label="please-wait-modal"
             style={{ marginTop: "-15px" }}
             actions={[
-                <Button key="login" variant="primary" data-testid="modal-btn-login" onClick={onLogin} isDisabled={authState?.creds.username === "" || authState?.creds.password === ""}>Login</Button>
+                <Button key="login" variant="primary" data-testid="modal-btn-login" onClick={onLogin} isDisabled={authState?.username === "" || authState?.password === ""}>Login</Button>
             ]}
         >
             <Form>
@@ -73,7 +66,7 @@ export const BasicAuthModal: FunctionComponent<BasicAuthModalProps> = (props: Ba
                         id="form-username"
                         data-testid="basic-auth-login-modal-username"
                         name="form-username"
-                        value={authState?.creds.username}
+                        value={authState?.username}
                         placeholder="Username"
                         onChange={onUsernameChange}
                     />
@@ -88,7 +81,7 @@ export const BasicAuthModal: FunctionComponent<BasicAuthModalProps> = (props: Ba
                         id="form-password"
                         data-testid="basic-auth-login-modal-password"
                         name="form-password"
-                        value={authState.creds.password}
+                        value={authState?.password}
                         placeholder="Password"
                         onChange={onPasswordChange}
                     />
