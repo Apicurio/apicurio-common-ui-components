@@ -79,17 +79,67 @@ const oidc_getUsername = async (): Promise<string> => {
     return Promise.resolve(user?.profile.preferred_username as string);
 };
 
+/** ********************************
+ * Basic auth implementation
+ ** ******************************** */
+
+let username: string | undefined = undefined;
+let password: string | undefined = undefined;
+
+const basic_login = async (usernameValue: string, passwordValue: string): Promise<void> => {
+    try {
+        console.debug("[Auth] Setting Username and Password for BasicAuth");
+        username = usernameValue;
+        password = passwordValue;
+    } catch (e) {
+        console.error("[Auth] Error logging in using BasicAuth: ", e);
+    }
+};
+
+const basic_logout = async (): Promise<void> => {
+    console.debug("[Auth] Logout for BasicAuth");
+    username = undefined;
+    password = undefined;
+    window.location.reload();
+    return;
+};
+
+const basic_isAuthenticated = async (): Promise<boolean> => {
+    return username !== undefined && password !== undefined;
+};
+
+const basic_getUsername = async (): Promise<string> => {
+    return Promise.resolve(username!);
+};
+
+const basic_getUsernameAndPassword = (): UsernameAndPassword | undefined => {
+    if (username !== undefined && password != undefined) {
+        return {
+            username: username,
+            password: password
+        };
+    } else {
+        return undefined;
+    }
+};
 
 /** ********************************
  * AuthService interface and hook.
  ** ******************************** */
 
+export interface UsernameAndPassword {
+  username: string;
+  password: string;
+}
+
 export interface AuthService {
-    isAuthEnabled: () => boolean;
+    isOidcAuthEnabled: () => boolean;
+    isBasicAuthEnabled: () => boolean;
     isAuthenticated: () => Promise<boolean>;
     getUsername: () => Promise<string | undefined>;
     getToken: () => Promise<string | undefined>;
-    login: () => Promise<void>;
+    getUsernameAndPassword: () => UsernameAndPassword | undefined;
+    login: (username: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
 }
 
@@ -106,21 +156,36 @@ export const useAuth: () => AuthService = (): AuthService => {
             userManager = oidc_createUserManager(config.options);
         }
         return {
-            isAuthEnabled: () => true,
+            isOidcAuthEnabled: () => true,
+            isBasicAuthEnabled: () => false,
             isAuthenticated: oidc_isAuthenticated,
             getToken: oidc_getToken,
+            getUsernameAndPassword: () => undefined,
             getUsername: oidc_getUsername,
             login: oidc_login,
             logout: oidc_logout
+        };
+    } else if (config.type === "basic") {
+        return {
+            isOidcAuthEnabled: () => false,
+            isBasicAuthEnabled: () => true,
+            isAuthenticated: basic_isAuthenticated,
+            getToken: () => Promise.resolve(undefined),
+            getUsernameAndPassword: basic_getUsernameAndPassword,
+            getUsername: basic_getUsername,
+            login: basic_login,
+            logout: basic_logout
         };
     }
 
     // Default: no auth
     return {
-        isAuthEnabled: () => false,
+        isOidcAuthEnabled: () => false,
+        isBasicAuthEnabled: () => false,
         isAuthenticated: () => Promise.resolve(false),
         getToken: () => Promise.resolve(undefined),
         getUsername: () => Promise.resolve(undefined),
+        getUsernameAndPassword: () => undefined,
         login: () => Promise.resolve(),
         logout: () => Promise.resolve()
     };
