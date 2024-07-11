@@ -44,7 +44,7 @@ export const ObjectSelectDemo: FunctionComponent<any> = () => {
                     />
                 </CardBody>
             </Card>
-            <div style={{ padding: "15px" }} />
+            <div style={{ padding: "15px" }}/>
             <Card ouiaId="ObjectArrayCard">
                 <CardTitle>Object Array Example</CardTitle>
                 <CardBody>
@@ -57,6 +57,23 @@ export const ObjectSelectDemo: FunctionComponent<any> = () => {
                         itemToTestId={item => `test-${item.testId}`}
                         itemIsDivider={() => false}
                         noSelectionLabel="Select on object"
+                    />
+                </CardBody>
+            </Card>
+            <div style={{ padding: "15px" }}/>
+            <Card ouiaId="ObjectArrayCard">
+                <CardTitle>Append to Document</CardTitle>
+                <CardBody>
+                    <ObjectSelect
+                        value={selectedObject}
+                        testId="object-select"
+                        items={objects}
+                        onSelect={setSelectedObject}
+                        itemToString={item => item.label}
+                        itemToTestId={item => `test-${item.testId}`}
+                        itemIsDivider={() => false}
+                        noSelectionLabel="Select on object"
+                        appendTo="document"
                     />
                 </CardBody>
             </Card>

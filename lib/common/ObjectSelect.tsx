@@ -16,6 +16,7 @@ export type ObjectSelectProps = {
     toggleId?: string;
     toggleClassname?: string;
     testId?: string;
+    appendTo?: "inline" | "document"
 };
 
 /**
@@ -60,7 +61,11 @@ export const ObjectSelect: FunctionComponent<ObjectSelectProps> = (props: Object
             id={props.toggleId}
             onSelect={onSelectInternal}
             onOpenChange={setToggled}
-            isOpen={isToggled}>
+            isOpen={isToggled}
+            popperProps={{
+                appendTo: props.appendTo === "document" ?  () => document.body : "inline"
+            }}
+        >
             {
                 props.items?.map((item: any, index: any) => {
                     if (props.itemIsDivider && props.itemIsDivider(item)) {
