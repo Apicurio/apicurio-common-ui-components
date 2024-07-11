@@ -55,6 +55,10 @@ export const ObjectSelect: FunctionComponent<ObjectSelectProps> = (props: Object
         </MenuToggle>
     );
 
+    const popperProps = {
+        appendTo: props.appendTo === "document" ?  () => document.body : "inline"
+    };
+
     return (
         <Select
             toggle={menuToggle}
@@ -62,9 +66,7 @@ export const ObjectSelect: FunctionComponent<ObjectSelectProps> = (props: Object
             onSelect={onSelectInternal}
             onOpenChange={setToggled}
             isOpen={isToggled}
-            popperProps={{
-                appendTo: props.appendTo === "document" ?  () => document.body : "inline"
-            }}
+            popperProps={popperProps as any}
         >
             {
                 props.items?.map((item: any, index: any) => {
