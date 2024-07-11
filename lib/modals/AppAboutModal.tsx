@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { AboutModal, Text, TextContent, TextList, TextListItem, TextVariants } from "@patternfly/react-core";
-import { IfNotLoading } from "../common";
+import { DateTime, IfNotLoading } from "../common";
 
 
 export type FrontendInfo = {
@@ -33,16 +33,6 @@ export type AppAboutModalProps = {
 export const AppAboutModal: FunctionComponent<AppAboutModalProps> = (props: AppAboutModalProps) => {
     const [frontend, setFrontend] = useState<FrontendInfo>();
     const [backend, setBackend] = useState<BackendInfo>();
-
-    const renderDate = (date: Date | string | undefined): React.ReactNode => {
-        if (typeof date === "string") {
-            return date as string;
-        } else if (date === undefined) {
-            return "";
-        } else {
-            return (date as Date).toDateString();
-        }
-    };
 
     useEffect(() => {
         if (props.isOpen) {
@@ -80,7 +70,9 @@ export const AppAboutModal: FunctionComponent<AppAboutModalProps> = (props: AppA
                         <TextListItem component="dd">{ frontend?.version }</TextListItem>
 
                         <TextListItem component="dt">Built on</TextListItem>
-                        <TextListItem component="dd">{ renderDate(frontend?.builtOn) }</TextListItem>
+                        <TextListItem component="dd">
+                            <DateTime date={frontend?.builtOn} format="locale" />
+                        </TextListItem>
 
                         <TextListItem component="dt">Digest</TextListItem>
                         <TextListItem component="dd">{ frontend?.digest }</TextListItem>
@@ -99,7 +91,9 @@ export const AppAboutModal: FunctionComponent<AppAboutModalProps> = (props: AppA
                         <TextListItem component="dd">{ backend?.version || "" }</TextListItem>
 
                         <TextListItem component="dt">Built on</TextListItem>
-                        <TextListItem component="dd">{ renderDate(backend?.builtOn) }</TextListItem>
+                        <TextListItem component="dd">
+                            <DateTime date={backend?.builtOn} format="locale" />
+                        </TextListItem>
                     </TextList>
                 </IfNotLoading>
             </TextContent>
