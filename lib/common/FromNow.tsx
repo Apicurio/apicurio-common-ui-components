@@ -3,7 +3,7 @@ import { DateTime } from "./DateTime.tsx";
 
 
 export type FromNowProps = {
-    date: Date | string | undefined;
+    date: Date | string | undefined | null;
 };
 
 

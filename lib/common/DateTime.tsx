@@ -5,7 +5,7 @@ import { DateTime as LuxonDateTime, LocaleOptions } from "luxon";
  * Properties
  */
 export type DateTimeProps = {
-    date: Date | string | undefined;
+    date: Date | string | undefined | null;
     format?: string;
     locale?: string;
 };
