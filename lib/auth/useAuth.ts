@@ -7,7 +7,7 @@ import { useContext } from "react";
  * OIDC auth implementation
  ** ******************************** */
 
-const OIDC_CONFIG_OPTIONS: string[] = ["url", "clientId", "redirectUri", "scope"];
+const OIDC_CONFIG_OPTIONS: string[] = ["url", "clientId", "redirectUri", "scope", "logoutUrl"];
 const OIDC_DEFAULT_SCOPES = "openid profile email";
 
 function only(items: string[], allOptions: any): any {
@@ -21,16 +21,17 @@ function only(items: string[], allOptions: any): any {
 }
 
 let userManager: UserManager | undefined = undefined;
+let oidcConfigOptions: any;
 
 const oidc_createUserManager = (options: any): (UserManager | undefined) => {
-    const configOptions: any = only(OIDC_CONFIG_OPTIONS, options);
+    oidcConfigOptions = only(OIDC_CONFIG_OPTIONS, options);
 
     return new UserManager({
-        authority: configOptions.url,
-        client_id: configOptions.clientId,
-        redirect_uri: configOptions.redirectUri,
+        authority: oidcConfigOptions.url,
+        client_id: oidcConfigOptions.clientId,
+        redirect_uri: oidcConfigOptions.redirectUri,
         response_type: "code",
-        scope: configOptions.scope || OIDC_DEFAULT_SCOPES,
+        scope: oidcConfigOptions.scope || OIDC_DEFAULT_SCOPES,
         filterProtocolClaims: true,
         includeIdTokenInSilentRenew: true,
         includeIdTokenInSilentSignout: true,
@@ -61,7 +62,9 @@ const oidc_login = async (): Promise<void> => {
 
 const oidc_logout = async (): Promise<void> => {
     return userManager?.removeUser().then(() => {
-        return userManager?.signoutRedirect({ post_logout_redirect_uri: window.location.href });
+        return userManager?.signoutRedirect({
+            post_logout_redirect_uri: oidcConfigOptions.logoutUrl || window.location.href
+        });
     });
 };
 
