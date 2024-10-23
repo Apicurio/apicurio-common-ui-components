@@ -3,7 +3,7 @@ import { EmptyState, EmptyStateBody, EmptyStateHeader, EmptyStateIcon, Spinner }
 import { ErrorCircleOIcon } from "@patternfly/react-icons";
 import { AuthService, UsernameAndPassword, useAuth } from "./useAuth.ts";
 import { If } from "../common";
-import { BasicAuthModal } from "../modals/BasicAuthModal.tsx";
+import { BasicAuthModal } from "../modals";
 
 enum AuthState {
     AUTHENTICATING, AUTHENTICATED, AUTHENTICATION_FAILED
