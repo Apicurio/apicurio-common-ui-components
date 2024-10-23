@@ -12,6 +12,7 @@ import { UrlUploadDemo } from "./demos/UrlUploadDemo.tsx";
 import { ResponsiveTableDemo } from "./demos/ResponsiveTableDemo.tsx";
 import { ToggleIconDemo } from "./demos/ToggleIconDemo.tsx";
 import { DateTimeDemo } from "./demos/DateTimeDemo.tsx";
+import { ChipFilterDemo } from "./demos/ChipFilterDemo.tsx";
 
 export type Demo = {
     name: string;
@@ -69,6 +70,11 @@ export const ALL_DEMOS: Demos = {
             name: "UrlUpload",
             description: "A component similar to the Patternfly FileUpload, but meant for choosing URLs instead of files.",
             component: <UrlUploadDemo/>
+        },
+        {
+            name: "ChipFilterDemo",
+            description: "A component that allows filtering of result sets by configuring multiple criteria filters.",
+            component: <ChipFilterDemo/>
         },
     ],
     "Modals": [
