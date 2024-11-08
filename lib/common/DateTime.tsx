@@ -1,5 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { DateTime as LuxonDateTime, LocaleOptions } from "luxon";
+import { Tooltip } from "@patternfly/react-core";
 
 /**
  * Properties
@@ -11,7 +12,9 @@ export type DateTimeProps = {
 };
 
 export const DateTime: FunctionComponent<DateTimeProps> = (props: DateTimeProps) => {
-    const [formattedDate, setFormattedDate] = useState<string | null>(null);
+    const [formattedDate, setFormattedDate] = useState<string>("");
+    const [localeDate, setLocaleDate] = useState<string>("");
+    const [intervalId, setIntervalId] = useState<any | undefined>();
 
     const format: string = props.format || "locale";
 
@@ -28,18 +31,39 @@ export const DateTime: FunctionComponent<DateTimeProps> = (props: DateTimeProps)
                 locale: props.locale
             };
             if (format === "fromNow") {
-                setFormattedDate(luxonDT.toRelative());
+                setFormattedDate(luxonDT.toRelative() || "");
+                setIntervalId(setInterval(() => {
+                    setFormattedDate(luxonDT.toRelative() || "");
+                }, 5000));
             } else if (format === "locale") {
                 setFormattedDate(luxonDT.toLocaleString(LuxonDateTime.DATETIME_FULL, localeOptions));
             } else {
                 setFormattedDate(luxonDT.toFormat(format, localeOptions));
             }
-        } else {
-            setFormattedDate(null);
+
+            setLocaleDate(luxonDT.toLocaleString(LuxonDateTime.DATETIME_FULL, localeOptions));
         }
+
+        // Cleanup function
+        return () => {
+            if (intervalId !== undefined) {
+                clearInterval(intervalId);
+            }
+        };
     }, [props.date]);
 
-    return (
-        <span>{ formattedDate || "" }</span>
-    );
+    if (format === "fromNow") {
+        return (
+            <Tooltip content={
+                <span>{localeDate}</span>
+            }>
+                <span>{formattedDate}</span>
+            </Tooltip>
+        );
+    } else {
+        return (
+            <span>{formattedDate}</span>
+        );
+    }
+
 };
