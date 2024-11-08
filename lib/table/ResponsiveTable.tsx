@@ -337,7 +337,9 @@ export const DeletableRow = memo<DeletableRowProps>(
                 onRowClick={(e) => {
                     if (e?.target instanceof HTMLElement) {
                         if (!["a", "button"].includes(e.target.tagName.toLowerCase())) {
-                            onClick && onClick();
+                            if (onClick) {
+                                onClick();
+                            }
                         }
                     }
                 }}
