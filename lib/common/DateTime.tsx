@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { DateTime as LuxonDateTime, LocaleOptions } from "luxon";
-import { Tooltip } from "@patternfly/react-core";
+import { Tooltip, useInterval } from "@patternfly/react-core";
 
 /**
  * Properties
@@ -14,11 +14,16 @@ export type DateTimeProps = {
 export const DateTime: FunctionComponent<DateTimeProps> = (props: DateTimeProps) => {
     const [formattedDate, setFormattedDate] = useState<string>("");
     const [localeDate, setLocaleDate] = useState<string>("");
-    const [intervalId, setIntervalId] = useState<any | undefined>();
 
     const format: string = props.format || "locale";
 
-    useEffect(() => {
+    useInterval(() => {
+        if (format === "fromNow") {
+            renderDate();
+        }
+    }, 5000);
+
+    const renderDate = (): void => {
         let luxonDT: LuxonDateTime | undefined = undefined;
         if (props.date && typeof props.date === "string") {
             luxonDT = LuxonDateTime.fromISO(props.date as string);
@@ -32,9 +37,6 @@ export const DateTime: FunctionComponent<DateTimeProps> = (props: DateTimeProps)
             };
             if (format === "fromNow") {
                 setFormattedDate(luxonDT.toRelative() || "");
-                setIntervalId(setInterval(() => {
-                    setFormattedDate(luxonDT.toRelative() || "");
-                }, 5000));
             } else if (format === "locale") {
                 setFormattedDate(luxonDT.toLocaleString(LuxonDateTime.DATETIME_FULL, localeOptions));
             } else {
@@ -43,13 +45,10 @@ export const DateTime: FunctionComponent<DateTimeProps> = (props: DateTimeProps)
 
             setLocaleDate(luxonDT.toLocaleString(LuxonDateTime.DATETIME_FULL, localeOptions));
         }
+    };
 
-        // Cleanup function
-        return () => {
-            if (intervalId !== undefined) {
-                clearInterval(intervalId);
-            }
-        };
+    useEffect(() => {
+        renderDate();
     }, [props.date]);
 
     if (format === "fromNow") {
