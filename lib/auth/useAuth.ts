@@ -74,7 +74,7 @@ const oidc_isAuthenticated = async (): Promise<boolean> => {
 
 const oidc_getToken = async (): Promise<string> => {
     const user = await userManager?.getUser();
-    return Promise.resolve(user?.id_token as string);
+    return Promise.resolve(user?.access_token as string);
 };
 
 const oidc_getUsername = async (): Promise<string> => {
