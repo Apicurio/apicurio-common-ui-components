@@ -167,7 +167,16 @@ export const useAuth: () => AuthService = (): AuthService => {
             isOidcAuthEnabled: () => true,
             isBasicAuthEnabled: () => false,
             isAuthenticated: oidc_isAuthenticated,
-            getToken: config.options.tokenType === "id" ? oidc_getIdToken : oidc_getAccessToken,
+            getToken: async () => {
+                if (config.options.logTokens) {
+                    const user: User | null | undefined = await userManager?.getUser();
+                    console.debug("[Auth] ID Token:");
+                    console.debug(user?.id_token);
+                    console.debug("[Auth] Access Token:");
+                    console.debug(user?.access_token);
+                }
+                return config.options.tokenType === "id" ? oidc_getIdToken() : oidc_getAccessToken();
+            },
             getUsernameAndPassword: () => undefined,
             getUsername: oidc_getUsername,
             login: oidc_login,
@@ -178,7 +187,7 @@ export const useAuth: () => AuthService = (): AuthService => {
             isOidcAuthEnabled: () => false,
             isBasicAuthEnabled: () => true,
             isAuthenticated: basic_isAuthenticated,
-            getToken: () => Promise.resolve(undefined),
+            getToken: async () => undefined,
             getUsernameAndPassword: basic_getUsernameAndPassword,
             getUsername: basic_getUsername,
             login: basic_login,
