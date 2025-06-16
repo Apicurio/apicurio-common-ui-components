@@ -1,4 +1,4 @@
-import { UserManager } from "oidc-client-ts";
+import { User, UserManager } from "oidc-client-ts";
 import { AuthConfig, AuthConfigContext } from "./AuthConfigContext.ts";
 import { useContext } from "react";
 
@@ -72,9 +72,14 @@ const oidc_isAuthenticated = async (): Promise<boolean> => {
     return await userManager?.getUser() != null;
 };
 
-const oidc_getToken = async (): Promise<string> => {
-    const user = await userManager?.getUser();
+const oidc_getAccessToken = async (): Promise<string> => {
+    const user: User | null | undefined = await userManager?.getUser();
     return Promise.resolve(user?.access_token as string);
+};
+
+const oidc_getIdToken = async (): Promise<string> => {
+    const user: User | null | undefined = await userManager?.getUser();
+    return Promise.resolve(user?.id_token as string);
 };
 
 const oidc_getUsername = async (): Promise<string> => {
@@ -162,7 +167,7 @@ export const useAuth: () => AuthService = (): AuthService => {
             isOidcAuthEnabled: () => true,
             isBasicAuthEnabled: () => false,
             isAuthenticated: oidc_isAuthenticated,
-            getToken: oidc_getToken,
+            getToken: config.options.tokenType === "id" ? oidc_getIdToken : oidc_getAccessToken,
             getUsernameAndPassword: () => undefined,
             getUsername: oidc_getUsername,
             login: oidc_login,
