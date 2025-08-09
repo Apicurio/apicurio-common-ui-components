@@ -77,7 +77,7 @@ export const BasicAuthModal: FunctionComponent<BasicAuthModalProps> = (props: Ba
                 >
                     <TextInput
                         isRequired={true}
-                        type="text"
+                        type="password"
                         id="form-password"
                         data-testid="basic-auth-login-modal-password"
                         name="form-password"
