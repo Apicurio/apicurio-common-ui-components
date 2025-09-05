@@ -2,17 +2,22 @@ import { User, UserManager } from "oidc-client-ts";
 import { AuthConfig, AuthConfigContext } from "./AuthConfigContext.ts";
 import { useContext } from "react";
 
-
 /** ********************************
  * OIDC auth implementation
  ** ******************************** */
 
-const OIDC_CONFIG_OPTIONS: string[] = ["url", "clientId", "redirectUri", "scope", "logoutUrl"];
+const OIDC_CONFIG_OPTIONS: string[] = [
+    "url",
+    "clientId",
+    "redirectUri",
+    "scope",
+    "logoutUrl",
+];
 const OIDC_DEFAULT_SCOPES = "openid profile email";
 
 function only(items: string[], allOptions: any): any {
     const rval: any = {};
-    items.forEach(item => {
+    items.forEach((item) => {
         if (allOptions[item] !== undefined) {
             rval[item] = allOptions[item];
         }
@@ -23,7 +28,7 @@ function only(items: string[], allOptions: any): any {
 let userManager: UserManager | undefined = undefined;
 let oidcConfigOptions: any;
 
-const oidc_createUserManager = (options: any): (UserManager | undefined) => {
+const oidc_createUserManager = (options: any): UserManager | undefined => {
     oidcConfigOptions = only(OIDC_CONFIG_OPTIONS, options);
 
     return new UserManager({
@@ -35,7 +40,7 @@ const oidc_createUserManager = (options: any): (UserManager | undefined) => {
         filterProtocolClaims: true,
         includeIdTokenInSilentRenew: true,
         includeIdTokenInSilentSignout: true,
-        loadUserInfo: true
+        loadUserInfo: true,
     });
 };
 
@@ -47,11 +52,13 @@ const oidc_login = async (): Promise<void> => {
         if (url.searchParams.get("state") || currentUser) {
             await userManager?.signinRedirectCallback();
         } else {
-            await userManager?.signinRedirect()
+            await userManager
+                ?.signinRedirect()
                 .then(() => {
                     userManager?.startSilentRenew();
                     userManager?.signinRedirectCallback();
-                }).catch(reason => {
+                })
+                .catch((reason: unknown) => {
                     console.log(reason);
                 });
         }
@@ -61,15 +68,20 @@ const oidc_login = async (): Promise<void> => {
 };
 
 const oidc_logout = async (): Promise<void> => {
+    // Capture the id_token before removing the user, as Okta and other providers expect id_token_hint
+    const user: User | null | undefined = await userManager?.getUser();
+    const idToken = user?.id_token;
     return userManager?.removeUser().then(() => {
         return userManager?.signoutRedirect({
-            post_logout_redirect_uri: oidcConfigOptions.logoutUrl || window.location.href
+            id_token_hint: idToken,
+            post_logout_redirect_uri:
+        oidcConfigOptions.logoutUrl || window.location.href,
         });
     });
 };
 
 const oidc_isAuthenticated = async (): Promise<boolean> => {
-    return await userManager?.getUser() != null;
+    return (await userManager?.getUser()) != null;
 };
 
 const oidc_getAccessToken = async (): Promise<string> => {
@@ -94,7 +106,10 @@ const oidc_getUsername = async (): Promise<string> => {
 let username: string | undefined = undefined;
 let password: string | undefined = undefined;
 
-const basic_login = async (usernameValue: string, passwordValue: string): Promise<void> => {
+const basic_login = async (
+    usernameValue: string,
+    passwordValue: string,
+): Promise<void> => {
     try {
         console.debug("[Auth] Setting Username and Password for BasicAuth");
         username = usernameValue;
@@ -124,7 +139,7 @@ const basic_getUsernameAndPassword = (): UsernameAndPassword | undefined => {
     if (username !== undefined && password != undefined) {
         return {
             username: username,
-            password: password
+            password: password,
         };
     } else {
         return undefined;
@@ -141,14 +156,14 @@ export interface UsernameAndPassword {
 }
 
 export interface AuthService {
-    isOidcAuthEnabled: () => boolean;
-    isBasicAuthEnabled: () => boolean;
-    isAuthenticated: () => Promise<boolean>;
-    getUsername: () => Promise<string | undefined>;
-    getToken: () => Promise<string | undefined>;
-    getUsernameAndPassword: () => UsernameAndPassword | undefined;
-    login: (username: string, password: string) => Promise<void>;
-    logout: () => Promise<void>;
+  isOidcAuthEnabled: () => boolean;
+  isBasicAuthEnabled: () => boolean;
+  isAuthenticated: () => Promise<boolean>;
+  getUsername: () => Promise<string | undefined>;
+  getToken: () => Promise<string | undefined>;
+  getUsernameAndPassword: () => UsernameAndPassword | undefined;
+  login: (username: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 /**
@@ -158,9 +173,12 @@ export const useAuth: () => AuthService = (): AuthService => {
     const config: AuthConfig = useContext(AuthConfigContext);
 
     if (config.type === "oidc") {
-        // TODO: if the config changes after we've initialized the UserManager, should we detect that and relogin or something?
+    // TODO: if the config changes after we've initialized the UserManager, should we detect that and relogin or something?
         if (userManager === undefined) {
-            console.debug("[Auth] Creating OIDC UserManager with options: ", config.options);
+            console.debug(
+                "[Auth] Creating OIDC UserManager with options: ",
+                config.options,
+            );
             userManager = oidc_createUserManager(config.options);
         }
         return {
@@ -175,12 +193,14 @@ export const useAuth: () => AuthService = (): AuthService => {
                     console.debug("[Auth] Access Token:");
                     console.debug(user?.access_token);
                 }
-                return config.options.tokenType === "id" ? oidc_getIdToken() : oidc_getAccessToken();
+                return config.options.tokenType === "id"
+                    ? oidc_getIdToken()
+                    : oidc_getAccessToken();
             },
             getUsernameAndPassword: () => undefined,
             getUsername: oidc_getUsername,
             login: oidc_login,
-            logout: oidc_logout
+            logout: oidc_logout,
         };
     } else if (config.type === "basic") {
         return {
@@ -191,7 +211,7 @@ export const useAuth: () => AuthService = (): AuthService => {
             getUsernameAndPassword: basic_getUsernameAndPassword,
             getUsername: basic_getUsername,
             login: basic_login,
-            logout: basic_logout
+            logout: basic_logout,
         };
     }
 
@@ -204,6 +224,6 @@ export const useAuth: () => AuthService = (): AuthService => {
         getUsername: () => Promise.resolve(undefined),
         getUsernameAndPassword: () => undefined,
         login: () => Promise.resolve(),
-        logout: () => Promise.resolve()
+        logout: () => Promise.resolve(),
     };
 };
