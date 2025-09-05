@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { Button, ButtonVariant, Form, InputGroup, TextInput } from "@patternfly/react-core";
 import { SearchIcon } from "@patternfly/react-icons";
 import { ObjectSelect } from "../common";
@@ -27,6 +27,10 @@ export const ChipFilterInput: FunctionComponent<ChipFilterInputProps> = (props: 
         });
         setFilterValue("");
     };
+
+    useEffect(() => {
+        setSelectedFilterType(props.filterTypes[0]);
+    }, [props.filterTypes]);
 
     return (
         <Form onSubmit={onFilterSubmit}>
