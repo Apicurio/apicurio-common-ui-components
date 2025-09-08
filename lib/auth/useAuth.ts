@@ -61,8 +61,12 @@ const oidc_login = async (): Promise<void> => {
 };
 
 const oidc_logout = async (): Promise<void> => {
+    // Capture the id_token before removing the user, as Okta and other providers expect id_token_hint
+    const user: User | null | undefined = await userManager?.getUser();
+    const idToken = user?.id_token;
     return userManager?.removeUser().then(() => {
         return userManager?.signoutRedirect({
+            id_token_hint: idToken,
             post_logout_redirect_uri: oidcConfigOptions.logoutUrl || window.location.href
         });
     });
