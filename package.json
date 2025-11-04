@@ -8,6 +8,10 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Apicurio/apicurio-common-ui-components"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "dev": "vite",
