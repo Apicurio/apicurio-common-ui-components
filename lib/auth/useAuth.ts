@@ -60,6 +60,15 @@ const oidc_login = async (): Promise<void> => {
     }
 };
 
+const oidc_refresh = async (): Promise<void> => {
+    try {
+        console.debug("[Auth] Refreshing token using OIDC");
+        await userManager?.signinSilent();
+    } catch (e) {
+        console.error("[Auth] Error refreshing token using OIDC: ", e);
+    }
+};
+
 const oidc_logout = async (): Promise<void> => {
     // Capture the id_token before removing the user, as Okta and other providers expect id_token_hint
     const user: User | null | undefined = await userManager?.getUser();
@@ -152,6 +161,7 @@ export interface AuthService {
     getToken: () => Promise<string | undefined>;
     getUsernameAndPassword: () => UsernameAndPassword | undefined;
     login: (username: string, password: string) => Promise<void>;
+    refresh: () => Promise<void>;
     logout: () => Promise<void>;
 }
 
@@ -184,6 +194,7 @@ export const useAuth: () => AuthService = (): AuthService => {
             getUsernameAndPassword: () => undefined,
             getUsername: oidc_getUsername,
             login: oidc_login,
+            refresh: oidc_refresh,
             logout: oidc_logout
         };
     } else if (config.type === "basic") {
@@ -195,6 +206,7 @@ export const useAuth: () => AuthService = (): AuthService => {
             getUsernameAndPassword: basic_getUsernameAndPassword,
             getUsername: basic_getUsername,
             login: basic_login,
+            refresh: () => Promise.resolve(),
             logout: basic_logout
         };
     }
@@ -208,6 +220,7 @@ export const useAuth: () => AuthService = (): AuthService => {
         getUsername: () => Promise.resolve(undefined),
         getUsernameAndPassword: () => undefined,
         login: () => Promise.resolve(),
+        refresh: () => Promise.resolve(),
         logout: () => Promise.resolve()
     };
 };
