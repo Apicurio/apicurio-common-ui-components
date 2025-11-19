@@ -28,19 +28,14 @@ jobs:
         run: node --version
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
-          ref: main
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Configure Git
         run: |
-          git init
           git config --global user.name "apicurio-ci"
           git config --global user.email "apicurio.ci@gmail.com"
-          git branch --set-upstream-to=origin/main
-          git pull
-          echo "#### Listing files ####"
-          find .
 
       - name: Set release version in package.json
         run: |
