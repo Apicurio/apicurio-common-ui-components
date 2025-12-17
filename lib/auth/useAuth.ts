@@ -7,7 +7,7 @@ import { useContext } from "react";
  * OIDC auth implementation
  ** ******************************** */
 
-const OIDC_CONFIG_OPTIONS: string[] = ["url", "clientId", "redirectUri", "scope", "logoutUrl"];
+const OIDC_CONFIG_OPTIONS: string[] = ["url", "clientId", "redirectUri", "scope", "logoutUrl", "loadUserInfo"];
 const OIDC_DEFAULT_SCOPES = "openid profile email";
 
 function only(items: string[], allOptions: any): any {
@@ -35,7 +35,7 @@ const oidc_createUserManager = (options: any): (UserManager | undefined) => {
         filterProtocolClaims: true,
         includeIdTokenInSilentRenew: true,
         includeIdTokenInSilentSignout: true,
-        loadUserInfo: true
+        loadUserInfo: oidcConfigOptions.loadUserInfo ?? true
     });
 };
 
