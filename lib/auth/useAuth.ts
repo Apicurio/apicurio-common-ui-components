@@ -182,7 +182,7 @@ const oidc_login = async (): Promise<void> => {
 
             // If state-based redirect is enabled, navigate to stored location
             if (useStateBasedRedirect && user?.state) {
-                const stateId = user.state.redirectStateId;
+                const stateId = (user.state as any).redirectStateId;
                 if (stateId) {
                     const storedLocation = getRedirectLocation(stateId);
                     clearRedirectLocation(stateId);
