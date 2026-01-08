@@ -7,7 +7,7 @@ import { useContext } from "react";
  * OIDC auth implementation
  ** ******************************** */
 
-const OIDC_CONFIG_OPTIONS: string[] = ["url", "clientId", "redirectUri", "scope", "logoutUrl", "loadUserInfo", "useStateBasedRedirect", "stateMaxAge"];
+const OIDC_CONFIG_OPTIONS: string[] = ["url", "clientId", "redirectUri", "scope", "logoutUrl", "loadUserInfo", "useStateBasedRedirect", "stateMaxAge", "onRedirect"];
 const OIDC_DEFAULT_SCOPES = "openid profile email";
 const SESSION_STORAGE_PREFIX = "apicurio.oidc.state.";
 const DEFAULT_STATE_MAX_AGE = 300000; // 5 minutes
@@ -189,7 +189,13 @@ const oidc_login = async (): Promise<void> => {
 
                     if (storedLocation && isValidRedirectLocation(storedLocation)) {
                         console.debug(`[Auth] Redirecting to stored location: ${storedLocation}`);
-                        window.location.href = storedLocation;
+
+                        // Use custom redirect handler if provided, otherwise use window.location.href
+                        if (oidcConfigOptions.onRedirect) {
+                            oidcConfigOptions.onRedirect(storedLocation);
+                        } else {
+                            window.location.href = storedLocation;
+                        }
                         return;
                     } else {
                         console.debug("[Auth] No valid stored location found, staying at current page");
