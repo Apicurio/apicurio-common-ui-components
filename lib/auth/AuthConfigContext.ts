@@ -28,6 +28,28 @@ export interface OidcAuthOptions {
      * @default 300000 (5 minutes)
      */
     stateMaxAge?: number;
+    /**
+     * Custom redirect handler for client-side navigation after OIDC authentication.
+     * This allows React Router or other routing libraries to handle navigation
+     * without causing a full page refresh.
+     *
+     * If not provided, defaults to `window.location.href = location` which causes
+     * a full page reload.
+     *
+     * @example
+     * // With React Router v6
+     * import { useNavigate } from 'react-router-dom';
+     *
+     * const navigate = useNavigate();
+     * const authConfig = {
+     *   type: "oidc",
+     *   options: {
+     *     // ... other options
+     *     onRedirect: (location) => navigate(location)
+     *   }
+     * };
+     */
+    onRedirect?: (location: string) => void;
 }
 
 export interface AuthConfig {
