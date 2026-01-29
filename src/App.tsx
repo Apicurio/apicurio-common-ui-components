@@ -5,30 +5,29 @@ import {
     Brand,
     Button,
     ButtonVariant,
+    Content,
     Masthead,
-    MastheadBrand,
+    MastheadLogo,
     MastheadContent,
     MastheadMain,
-    MastheadToggle,
+    MastheadToggle, MastheadBrand,
     Nav, NavExpandable,
     NavItem,
     NavList,
     Page,
     PageSection,
-    PageSectionVariants,
     PageSidebar,
     PageSidebarBody,
     PageToggleButton,
-    Text,
-    TextContent,
     Toolbar,
     ToolbarContent,
     ToolbarGroup,
     ToolbarItem
 } from "@patternfly/react-core";
+
 import BarsIcon from "@patternfly/react-icons/dist/esm/icons/bars-icon";
 import QuestionCircleIcon from "@patternfly/react-icons/dist/esm/icons/question-circle-icon";
-import brandLogo from "/apicurio_primary_logo_white.svg";
+import brandLogo from "/apicurio_primary_logo_black.svg";
 import { ALL_DEMOS, Demo } from "./AllDemos.tsx";
 
 function App() {
@@ -38,11 +37,11 @@ function App() {
         <Toolbar id="toolbar" isFullHeight isStatic>
             <ToolbarContent>
                 <ToolbarGroup
-                    variant="icon-button-group"
-                    align={{ default: "alignRight" }}
-                    spacer={{ default: "spacerNone", md: "spacerMd" }}
+                    variant="action-group-plain"
+                    align={{ default: "alignEnd" }}
+                    gap={{ default: "gapNone", md: "gapMd" }}
                 >
-                    <ToolbarGroup variant="icon-button-group" visibility={{ default: "hidden", lg: "visible" }}>
+                    <ToolbarGroup variant="action-group-plain" visibility={{ default: "hidden", lg: "visible" }}>
                         <ToolbarItem>
                             <Button aria-label="Help" variant={ButtonVariant.plain} icon={<QuestionCircleIcon />} />
                         </ToolbarItem>
@@ -54,16 +53,16 @@ function App() {
 
     const masthead = (
         <Masthead>
-            <MastheadToggle>
-                <PageToggleButton variant="plain" aria-label="Global navigation">
-                    <BarsIcon />
-                </PageToggleButton>
-            </MastheadToggle>
             <MastheadMain>
+                <MastheadToggle>
+                    <PageToggleButton variant="plain" aria-label="Global navigation" icon={<BarsIcon />} />
+                </MastheadToggle>
                 <MastheadBrand>
-                    <Brand src={brandLogo} alt="PatternFly" heights={{ default: "36px" }} />
+                    <MastheadLogo>
+                        <Brand src={brandLogo} alt="PatternFly" heights={{ default: "36px" }} />
+                    </MastheadLogo>
+                    <div style={{ fontSize: "20px", marginLeft: "10px", marginBottom: "-5px" }}>Common UI Components</div>
                 </MastheadBrand>
-                <div style={{ fontSize: "20px", marginLeft: "10px", marginBottom: "-5px" }}>Common UI Components</div>
             </MastheadMain>
             <MastheadContent>{headerToolbar}</MastheadContent>
         </Masthead>
@@ -120,20 +119,20 @@ function App() {
 
     return (
         <Page
-            header={masthead}
+            masthead={masthead}
             sidebar={sidebar}
             isManagedSidebar
             mainContainerId={mainContainerId}
             additionalGroupedContent={
-                <PageSection variant={PageSectionVariants.light} isWidthLimited>
-                    <TextContent>
-                        <Text component="h1">{activeDemo.name}</Text>
-                        <Text component="p">{activeDemo.description}</Text>
-                    </TextContent>
+                <PageSection hasBodyWrapper isWidthLimited>
+                    <Content style={{ padding: "20px 20px 0px 20px" }}>
+                        <Content component="h1">{activeDemo.name}</Content>
+                        <Content component="p">{activeDemo.description}</Content>
+                    </Content>
                 </PageSection>
             }
         >
-            <PageSection children={activeDemo.component} />
+            <PageSection style={{ padding: "20px" }} hasBodyWrapper={false} children={activeDemo.component} />
         </Page>
     );
 }

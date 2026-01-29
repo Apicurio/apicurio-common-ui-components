@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Chip, ChipGroup } from "@patternfly/react-core";
+import { Label, LabelGroup } from "@patternfly/react-core";
 import { ChipFilterCriteria } from "./ChipFilterCriteria";
 
 export type FilterChipsProps = {
@@ -15,15 +15,15 @@ export type FilterChipsProps = {
 export const FilterChips: FunctionComponent<FilterChipsProps> = (props: FilterChipsProps) => {
 
     return (
-        <ChipGroup categoryName={props.categoryName || "Filters"} isClosable onClick={props.onClearAllCriteria}>
+        <LabelGroup categoryName={props.categoryName || "Filters"} isClosable onClick={props.onClearAllCriteria}>
             {props.criteria.map((fc, idx) => (
-                <Chip key={idx} onClick={() => props.onRemoveCriteria(fc)}>
+                <Label variant="outline" key={idx} onClose={() => props.onRemoveCriteria(fc)}>
                     <b>{fc.filterBy.label}</b>
                     <span>: </span>
                     <span>{fc.filterValue}</span>
-                </Chip>
+                </Label>
             ))}
-        </ChipGroup>
+        </LabelGroup>
     );
 
 };

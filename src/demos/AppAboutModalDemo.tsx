@@ -51,7 +51,7 @@ export const AppAboutModalDemo: FunctionComponent<any> = () => {
                         frontendInfo={staticFrontendInfo}
                         backendInfo={staticBackendInfo}
                         backendLabel="Backend API"
-                        brandImageSrc="/apicurio_primary_logo_white.svg"
+                        brandImageSrc="/apicurio_primary_logo_black.svg"
                         brandImageAlt="Demo Brand"
                         onClose={() => setIsStaticOpen(false)}
                         isOpen={isStaticOpen} />
@@ -68,7 +68,7 @@ export const AppAboutModalDemo: FunctionComponent<any> = () => {
                         frontendInfo={fetchFrontendInfo}
                         backendInfo={fetchBackendInfo}
                         backendLabel="Backend API"
-                        brandImageSrc="/apicurio_primary_logo_white.svg"
+                        brandImageSrc="/apicurio_primary_logo_black.svg"
                         brandImageAlt="Demo Brand"
                         onClose={() => setIsAsyncOpen(false)}
                         isOpen={isAsyncOpen} />

@@ -41,6 +41,7 @@ export const ChipFilterInput: FunctionComponent<ChipFilterInputProps> = (props: 
                     testId="chip-filter-select"
                     toggleClassname="chip-filter-toggle"
                     onSelect={setSelectedFilterType}
+                    appendTo="document"
                     itemToTestId={(item) => item.testId}
                     itemToString={(item) => item.label} />
                 <TextInput name="filterValue" id="filterValue" type="search"
@@ -48,11 +49,11 @@ export const ChipFilterInput: FunctionComponent<ChipFilterInputProps> = (props: 
                     onChange={(_evt, value) => setFilterValue(value)}
                     data-testid="chip-filter-value"
                     aria-label="search input"/>
-                <Button variant={ButtonVariant.control}
+                <Button icon={<SearchIcon/>} variant={ButtonVariant.control}
                     onClick={onFilterSubmit}
                     data-testid="chip-filter-search"
                     aria-label="search button for search input">
-                    <SearchIcon/>
+                    
                 </Button>
             </InputGroup>
         </Form>

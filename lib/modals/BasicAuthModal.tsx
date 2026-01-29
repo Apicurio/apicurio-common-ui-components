@@ -1,5 +1,13 @@
 import { FunctionComponent, useState } from "react";
-import { Button, Form, FormGroup, Modal, TextInput } from "@patternfly/react-core";
+import {
+	Button,
+	Form,
+	FormGroup,
+	TextInput
+} from "@patternfly/react-core";
+import {
+	Modal
+} from "@patternfly/react-core/deprecated";
 import { UsernameAndPassword } from "../auth";
 
 type BasicAuthState = {

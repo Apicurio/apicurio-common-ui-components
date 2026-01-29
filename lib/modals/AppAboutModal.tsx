@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { AboutModal, Text, TextContent, TextList, TextListItem, TextVariants } from "@patternfly/react-core";
+import { AboutModal, Content, ContentVariants } from "@patternfly/react-core";
 import { DateTime, IfNotLoading } from "../common";
 
 
@@ -59,44 +59,44 @@ export const AppAboutModal: FunctionComponent<AppAboutModalProps> = (props: AppA
             brandImageAlt={props.brandImageAlt}
             aria-label={props.brandImageAlt}
         >
-            <TextContent className="app-about-modal-content" style={{ marginTop: "-25px" }}>
-                <Text component={TextVariants.h2}>Web console info</Text>
+            <Content className="app-about-modal-content" style={{ marginTop: "-25px" }}>
+                <Content component={ContentVariants.h2}>Web console info</Content>
                 <IfNotLoading isLoading={frontend === undefined}>
-                    <TextList component="dl">
-                        <TextListItem component="dt">Project</TextListItem>
-                        <TextListItem component="dd"><a href={frontend?.url} target="_blank">{ frontend?.name }</a></TextListItem>
+                    <Content component="dl">
+                        <Content component="dt">Project</Content>
+                        <Content component="dd"><a href={frontend?.url} target="_blank">{ frontend?.name }</a></Content>
 
-                        <TextListItem component="dt">Version</TextListItem>
-                        <TextListItem component="dd">{ frontend?.version }</TextListItem>
+                        <Content component="dt">Version</Content>
+                        <Content component="dd">{ frontend?.version }</Content>
 
-                        <TextListItem component="dt">Built on</TextListItem>
-                        <TextListItem component="dd">
+                        <Content component="dt">Built on</Content>
+                        <Content component="dd">
                             <DateTime date={frontend?.builtOn} format="locale" />
-                        </TextListItem>
+                        </Content>
 
-                        <TextListItem component="dt">Digest</TextListItem>
-                        <TextListItem component="dd">{ frontend?.digest }</TextListItem>
-                    </TextList>
+                        <Content component="dt">Digest</Content>
+                        <Content component="dd">{ frontend?.digest }</Content>
+                    </Content>
                 </IfNotLoading>
-                <Text style={{ marginTop: "40px" }} component={TextVariants.h2}>{props.backendLabel}</Text>
+                <Content style={{ marginTop: "40px" }} component={ContentVariants.h2}>{props.backendLabel}</Content>
                 <IfNotLoading isLoading={backend === undefined}>
-                    <TextList component="dl">
-                        <TextListItem component="dt">Name</TextListItem>
-                        <TextListItem component="dd">{ backend?.name || "" }</TextListItem>
+                    <Content component="dl">
+                        <Content component="dt">Name</Content>
+                        <Content component="dd">{ backend?.name || "" }</Content>
 
-                        <TextListItem component="dt">Description</TextListItem>
-                        <TextListItem component="dd">{ backend?.description || "" }</TextListItem>
+                        <Content component="dt">Description</Content>
+                        <Content component="dd">{ backend?.description || "" }</Content>
 
-                        <TextListItem component="dt">Version</TextListItem>
-                        <TextListItem component="dd">{ backend?.version || "" }</TextListItem>
+                        <Content component="dt">Version</Content>
+                        <Content component="dd">{ backend?.version || "" }</Content>
 
-                        <TextListItem component="dt">Built on</TextListItem>
-                        <TextListItem component="dd">
+                        <Content component="dt">Built on</Content>
+                        <Content component="dd">
                             <DateTime date={backend?.builtOn} format="locale" />
-                        </TextListItem>
-                    </TextList>
+                        </Content>
+                    </Content>
                 </IfNotLoading>
-            </TextContent>
+            </Content>
         </AboutModal>
     );
 };

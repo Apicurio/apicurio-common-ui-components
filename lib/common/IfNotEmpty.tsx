@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { EmptyState, EmptyStateBody, EmptyStateHeader, EmptyStateVariant } from "@patternfly/react-core";
+import { EmptyState, EmptyStateBody, EmptyStateVariant } from "@patternfly/react-core";
 
 /**
  * Properties
@@ -23,8 +23,7 @@ export const IfNotEmpty: FunctionComponent<IfNotEmptyProps> = ({ collection, emp
     };
 
     const empty: React.ReactNode = emptyState || (
-        <EmptyState variant={EmptyStateVariant.xs}>
-            <EmptyStateHeader titleText={emptyStateTitle || "None found"} headingLevel="h4" />
+        <EmptyState  headingLevel="h4"   titleText={emptyStateTitle || "None found"} variant={EmptyStateVariant.xs}>
             <EmptyStateBody>{emptyStateMessage || "No items found."}</EmptyStateBody>
         </EmptyState>
     );

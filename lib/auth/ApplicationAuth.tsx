@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { EmptyState, EmptyStateBody, EmptyStateHeader, EmptyStateIcon, Spinner } from "@patternfly/react-core";
+import { EmptyState, EmptyStateBody, Spinner } from "@patternfly/react-core";
 import { ErrorCircleOIcon } from "@patternfly/react-icons";
 import { AuthService, UsernameAndPassword, useAuth } from "./useAuth.ts";
 import { If } from "../common";
@@ -49,8 +49,7 @@ export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) 
     return (
         <>
             <If condition={authState === AuthState.AUTHENTICATING && auth.isOidcAuthEnabled()}>
-                <EmptyState>
-                    <EmptyStateHeader titleText="Loading" headingLevel="h4" />
+                <EmptyState  headingLevel="h4"   titleText="Loading">
                     <EmptyStateBody>
                         <Spinner size="xl" aria-label="Loading spinner" />
                     </EmptyStateBody>
@@ -60,8 +59,7 @@ export const ApplicationAuth: FunctionComponent<AuthProps> = (props: AuthProps) 
                 <BasicAuthModal onLogin={basicAuthLogin}></BasicAuthModal>
             </If>
             <If condition={authState === AuthState.AUTHENTICATION_FAILED}>
-                <EmptyState>
-                    <EmptyStateHeader titleText="Empty state" headingLevel="h4" icon={<EmptyStateIcon icon={ErrorCircleOIcon} />} />
+                <EmptyState  headingLevel="h4" icon={ErrorCircleOIcon}  titleText="Empty state">
                     <EmptyStateBody>
                         Authentication failed.
                     </EmptyStateBody>

@@ -1,5 +1,10 @@
 import { FunctionComponent } from "react";
-import { Modal, Spinner } from "@patternfly/react-core";
+import {
+	Spinner
+} from "@patternfly/react-core";
+import {
+	Modal
+} from "@patternfly/react-core/deprecated";
 
 
 /**
