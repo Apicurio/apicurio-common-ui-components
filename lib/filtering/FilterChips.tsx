@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Label, LabelGroup } from '@patternfly/react-core';
+import { Label, LabelGroup } from "@patternfly/react-core";
 import { ChipFilterCriteria } from "./ChipFilterCriteria";
 
 export type FilterChipsProps = {

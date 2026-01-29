@@ -1,10 +1,10 @@
 import { FunctionComponent } from "react";
 import {
 	Progress
-} from '@patternfly/react-core';
+} from "@patternfly/react-core";
 import {
 	Modal
-} from '@patternfly/react-core/deprecated';
+} from "@patternfly/react-core/deprecated";
 
 
 /**
