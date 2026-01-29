@@ -79,12 +79,12 @@ export const UrlUpload: FunctionComponent<UrlUploadProps> = (props: UrlUploadPro
 
     return (
         <div className="url-upload" data-testid={props.testId}>
-            <div className="url-upload-flex" style={{ display: "flex" }}>
-                <div className="url-upload-url" style={{ flexGrow: 1 }}>
+            <div className="url-upload-flex" style={{ display: "flex", marginBottom: "2px" }} >
+                <div className="url-upload-url" style={{ flexGrow: 1, marginRight: "3px" }}>
                     <TextInput data-testid={`${props.testId}-input`} value={url} type="text" placeholder={props.urlPlaceholder} id={props.id}
                         onChange={onTextInputChange} aria-label="url input" />
                 </div>
-                <div className="url-fetch-button">
+                <div className="url-fetch-button" style={{ marginRight: "3px" }}>
                     <Button data-testid={`${props.testId}-fetch`} variant="control" isDisabled={!hasUrl()} onClick={onFetch}>Fetch</Button>
                 </div>
                 <div className="url-clear-button">

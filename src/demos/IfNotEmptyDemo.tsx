@@ -3,7 +3,6 @@ import {
     Alert, Button,
     EmptyState, EmptyStateActions,
     EmptyStateBody, EmptyStateFooter,
-    EmptyStateHeader, EmptyStateIcon,
     Form,
     FormGroup,
     SearchInput
@@ -23,8 +22,7 @@ export const IfNotEmptyDemo: FunctionComponent<any> = () => {
     };
 
     const emptyState = (
-        <EmptyState>
-            <EmptyStateHeader titleText="No items found" headingLevel="h4" icon={<EmptyStateIcon icon={CubesIcon} />} />
+        <EmptyState headingLevel="h4" icon={CubesIcon} titleText="No items found">
             <EmptyStateBody>
                 No items were found in the collection.  Add some items and see what happens!
             </EmptyStateBody>

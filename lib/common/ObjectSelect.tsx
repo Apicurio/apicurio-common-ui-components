@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import { Divider, MenuToggle, MenuToggleElement, Select, SelectOption } from "@patternfly/react-core";
+import { SelectPopperProps } from "@patternfly/react-core/src/components/Select/Select.tsx";
 
 
 /**
@@ -55,7 +56,7 @@ export const ObjectSelect: FunctionComponent<ObjectSelectProps> = (props: Object
         </MenuToggle>
     );
 
-    const popperProps = {
+    const popperProps: SelectPopperProps = {
         appendTo: props.appendTo === "document" ?  () => document.body : "inline"
     };
 

@@ -8,8 +8,6 @@ import {
     EmptyStateActions,
     EmptyStateBody,
     EmptyStateFooter,
-    EmptyStateHeader,
-    EmptyStateIcon,
     Form,
     FormGroup, List, ListItem,
     SearchInput,
@@ -48,8 +46,7 @@ export const ListWithToolbarDemo: FunctionComponent<any> = () => {
     };
 
     const emptyState = (
-        <EmptyState>
-            <EmptyStateHeader titleText="No items exist" headingLevel="h4" icon={<EmptyStateIcon icon={CubesIcon} />} />
+        <EmptyState headingLevel="h4" icon={CubesIcon} titleText="No items exist">
             <EmptyStateBody>
                 No items exist.  Use this empty state to tell the user that, and help them create something.
             </EmptyStateBody>
@@ -62,8 +59,7 @@ export const ListWithToolbarDemo: FunctionComponent<any> = () => {
     );
 
     const filteredEmptyState = (
-        <EmptyState>
-            <EmptyStateHeader titleText="No items found" headingLevel="h4" icon={<EmptyStateIcon icon={CubesIcon} />} />
+        <EmptyState headingLevel="h4" icon={CubesIcon} titleText="No items found">
             <EmptyStateBody>
                 No items were found that match the criteria.  This may mean that no items exist at all, but we
                 can't know that.
@@ -74,7 +70,7 @@ export const ListWithToolbarDemo: FunctionComponent<any> = () => {
     const toolbar = (
         <Toolbar id="toolbar-items-example">
             <ToolbarContent>
-                <ToolbarItem variant="search-filter">
+                <ToolbarItem >
                     <SearchInput
                         aria-label="Items example search input"
                         value={criteria}

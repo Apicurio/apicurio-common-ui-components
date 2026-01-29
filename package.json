@@ -1,7 +1,7 @@
 {
   "name": "@apicurio/common-ui-components",
   "private": false,
-  "version": "2.1.1",
+  "version": "3.0.0",
   "type": "module",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
@@ -19,10 +19,10 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "peerDependencies": {
-    "@patternfly/patternfly": "~5",
-    "@patternfly/react-core": "~5",
-    "@patternfly/react-icons": "~5",
-    "@patternfly/react-table": "~5",
+    "@patternfly/patternfly": "~6",
+    "@patternfly/react-core": "~6",
+    "@patternfly/react-icons": "~6",
+    "@patternfly/react-table": "~6",
     "luxon": "~3",
     "oidc-client-ts": "~3",
     "react": "~18",
@@ -32,10 +32,10 @@
   },
   "devDependencies": {
     "@apicurio/eslint-config": "0.3.0",
-    "@patternfly/patternfly": "5.4.2",
-    "@patternfly/react-core": "5.4.14",
-    "@patternfly/react-icons": "5.4.2",
-    "@patternfly/react-table": "5.4.16",
+    "@patternfly/patternfly": "6.0.0",
+    "@patternfly/react-core": "6.0.0",
+    "@patternfly/react-icons": "6.0.0",
+    "@patternfly/react-table": "6.0.0",
     "@types/luxon": "3.7.1",
     "@types/node": "20.19.13",
     "@types/react": "18.3.24",

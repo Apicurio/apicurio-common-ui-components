@@ -1,6 +1,7 @@
 import { FunctionComponent, useState } from "react";
 import { ObjectSelect } from "../../lib/common";
-import { Button, Card, CardBody, CardTitle, Form, FormGroup, Modal, Wizard, WizardStep } from "@patternfly/react-core";
+import { Button, Card, CardBody, CardTitle, Form, FormGroup, Wizard, WizardStep } from "@patternfly/react-core";
+import { Modal } from "@patternfly/react-core/deprecated";
 
 type ComplexItem = {
     label: string;
@@ -34,6 +35,7 @@ export const ObjectSelectDemo: FunctionComponent<any> = () => {
                         itemToTestId={item => `test-${item}`}
                         itemIsDivider={() => false}
                         noSelectionLabel="Select an item"
+                        appendTo="document"
                     />
                 </CardBody>
             </Card>
@@ -50,6 +52,7 @@ export const ObjectSelectDemo: FunctionComponent<any> = () => {
                         itemToTestId={item => `test-${item.testId}`}
                         itemIsDivider={() => false}
                         noSelectionLabel="Select on object"
+                        appendTo="document"
                     />
                 </CardBody>
             </Card>
