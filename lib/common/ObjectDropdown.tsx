@@ -92,7 +92,7 @@ export const ObjectDropdown: FunctionComponent<ObjectDropdownProps> = (props: Ob
                 {
                     props.items.map((item, index) => {
                         if (props.itemIsVisible !== undefined && !props.itemIsVisible(item)) {
-                            return <></>;
+                            return null;
                         }
                         return (
                             (props.itemIsDivider && props.itemIsDivider(item)) ?

@@ -22,6 +22,10 @@ export const ObjectDropdownDemo: FunctionComponent<any> = () => {
             label: "Option 3",
             testId: "option-3"
         },
+        {
+            label: "Not Visible",
+            testId: "not-visible"
+        }
     ];
 
     return (
@@ -51,6 +55,7 @@ export const ObjectDropdownDemo: FunctionComponent<any> = () => {
                         itemToString={item => item.label}
                         itemIsDivider={() => false}
                         itemToTestId={item => `test-${item.testId}`}
+                        itemIsVisible={item => item.testId !== "not-visible"}
                         noSelectionLabel="Select"
                     />
                 </CardBody>
