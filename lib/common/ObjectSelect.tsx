@@ -77,7 +77,9 @@ export const ObjectSelect: FunctionComponent<ObjectSelectProps> = (props: Object
                         return (
                             <SelectOption
                                 isSelected={item === props.value}
-                                component={props => <button {...props} data-testid={itemToTestId(item)} />}
+                                component={React.forwardRef<HTMLButtonElement, any>((componentProps, ref) => (
+                                    <button {...componentProps} ref={ref} data-testid={itemToTestId(item)} />
+                                ))}
                                 key={index}
                                 value={index}
                             >

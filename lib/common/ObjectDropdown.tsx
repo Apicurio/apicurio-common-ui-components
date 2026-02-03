@@ -102,7 +102,9 @@ export const ObjectDropdown: FunctionComponent<ObjectDropdownProps> = (props: Ob
                                     value={index}
                                     key={`action-${index}`}
                                     isDisabled={props.itemIsDisabled === undefined ? false : props.itemIsDisabled(item) }
-                                    component={props => <button {...props} data-testid={itemToTestId(item)} />}
+                                    component={React.forwardRef<HTMLButtonElement, any>((componentProps, ref) => (
+                                        <button {...componentProps} ref={ref} data-testid={itemToTestId(item)} />
+                                    ))}
                                 >
                                     { props.itemToString(item) }
                                 </DropdownItem>
