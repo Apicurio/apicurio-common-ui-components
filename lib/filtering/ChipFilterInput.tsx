@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { Button, ButtonVariant, Form, InputGroup, TextInput } from "@patternfly/react-core";
+import { Button, ButtonVariant, Form, InputGroup, InputGroupItem, TextInput } from "@patternfly/react-core";
 import { SearchIcon } from "@patternfly/react-icons";
 import { ObjectSelect } from "../common";
 import { ChipFilterType } from "./ChipFilterType";
@@ -35,26 +35,32 @@ export const ChipFilterInput: FunctionComponent<ChipFilterInputProps> = (props: 
     return (
         <Form onSubmit={onFilterSubmit}>
             <InputGroup>
-                <ObjectSelect
-                    value={selectedFilterType}
-                    items={props.filterTypes}
-                    testId="chip-filter-select"
-                    toggleClassname="chip-filter-toggle"
-                    onSelect={setSelectedFilterType}
-                    appendTo="document"
-                    itemToTestId={(item) => item.testId}
-                    itemToString={(item) => item.label} />
-                <TextInput name="filterValue" id="filterValue" type="search"
-                    value={filterValue}
-                    onChange={(_evt, value) => setFilterValue(value)}
-                    data-testid="chip-filter-value"
-                    aria-label="search input"/>
-                <Button icon={<SearchIcon/>} variant={ButtonVariant.control}
-                    onClick={onFilterSubmit}
-                    data-testid="chip-filter-search"
-                    aria-label="search button for search input">
-                    
-                </Button>
+                <InputGroupItem>
+                    <ObjectSelect
+                        value={selectedFilterType}
+                        items={props.filterTypes}
+                        testId="chip-filter-select"
+                        toggleClassname="chip-filter-toggle"
+                        onSelect={setSelectedFilterType}
+                        appendTo="document"
+                        itemToTestId={(item) => item.testId}
+                        itemToString={(item) => item.label} />
+                </InputGroupItem>
+                <InputGroupItem isFill>
+                    <TextInput name="filterValue" id="filterValue" type="search"
+                        value={filterValue}
+                        onChange={(_evt, value) => setFilterValue(value)}
+                        data-testid="chip-filter-value"
+                        aria-label="search input"/>
+                </InputGroupItem>
+                <InputGroupItem>
+                    <Button icon={<SearchIcon/>} variant={ButtonVariant.control}
+                        onClick={onFilterSubmit}
+                        data-testid="chip-filter-search"
+                        aria-label="search button for search input">
+
+                    </Button>
+                </InputGroupItem>
             </InputGroup>
         </Form>
     );
