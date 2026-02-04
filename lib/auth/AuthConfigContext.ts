@@ -37,8 +37,8 @@ export interface OidcAuthOptions {
      * a full page reload.
      *
      * @example
-     * // With React Router v6
-     * import { useNavigate } from 'react-router-dom';
+     * // With React Router v7
+     * import { useNavigate } from 'react-router';
      *
      * const navigate = useNavigate();
      * const authConfig = {
