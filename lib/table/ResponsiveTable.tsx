@@ -16,7 +16,7 @@ import {
 } from "@patternfly/react-table";
 import type { PropsWithChildren, ReactElement } from "react";
 import { forwardRef, memo, useCallback, useMemo, useState } from "react";
-import useResizeObserver from "use-resize-observer";
+import { useResizeObserver } from "../hooks/useResizeObserver.ts";
 import { TableSkeleton } from "./TableSkeleton.tsx";
 
 export type RenderHeaderCb<TCol> = (props: {
@@ -99,7 +99,7 @@ export const ResponsiveTable = <TRow, TCol>({
             });
         }
     };
-    const { ref } = useResizeObserver({ onResize });
+    const { ref } = useResizeObserver<HTMLTableElement>({ onResize });
     const showColumns = width >= 576;
 
     const canColumnBeHidden = useCallback(
