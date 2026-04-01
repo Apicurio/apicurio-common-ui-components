@@ -373,6 +373,10 @@ const oidc_logout = async (): Promise<void> => {
         return userManager?.signoutRedirect({
             id_token_hint: idToken,
             post_logout_redirect_uri: oidcConfigOptions.logoutUrl || window.location.href
+        }).catch(() => {
+            // OIDC provider doesn't support end_session_endpoint (e.g., Dex).
+            // Session is already cleared by removeUser(), just redirect.
+            window.location.href = oidcConfigOptions.logoutUrl || "/";
         });
     });
 };
