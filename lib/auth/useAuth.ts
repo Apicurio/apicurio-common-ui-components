@@ -9,7 +9,7 @@ import { useContext } from "react";
 
 const OIDC_CONFIG_OPTIONS: string[] = ["url", "clientId", "redirectUri", "scope", "logoutUrl", "loadUserInfo", "useStateBasedRedirect", "stateMaxAge", "onRedirect"];
 const OIDC_DEFAULT_SCOPES = "openid profile email";
-const SESSION_STORAGE_PREFIX = "apicurio.oidc.state.";
+const SESSION_STORAGE_PREFIX = "apitomy.oidc.state.";
 const OIDC_CALLBACK_PARAM_NAMES = ["state", "code", "error", "error_description", "error_uri", "session_state", "iss"];
 const DEFAULT_STATE_MAX_AGE = 300000; // 5 minutes
 

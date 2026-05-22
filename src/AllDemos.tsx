@@ -80,7 +80,7 @@ export const ALL_DEMOS: Demos = {
     "Modals": [
         {
             name: "AppAboutModal",
-            description: "A generic About modal dialog used by all Apicurio projects to display metainfo about the UI and API.",
+            description: "A generic About modal dialog used by all Apitomy projects to display metainfo about the UI and API.",
             component: <AppAboutModalDemo/>
         },
         {

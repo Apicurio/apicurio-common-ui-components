@@ -1,5 +1,5 @@
-# Apicurio Common UI Components
-This library contains some React + Patternfly UI components that are used across multiple Apicurio
+# Apitomy Common UI Components
+This library contains some React + Patternfly UI components that are used across multiple Apitomy
 UI projects.
 
 ## Requirements
@@ -56,7 +56,7 @@ If you are still on earlier versions, follow the appropriate upgrade guides firs
 1. Update your application to React 19, React Router 7, and PatternFly v6
 2. Update this library to v4.0.0:
    ```bash
-   npm install @apicurio/common-ui-components@4.0.0
+   npm install @apitomy/common-ui-components@4.0.0
    ```
 3. No code changes required in your application - all component APIs remain compatible
 

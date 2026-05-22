@@ -27,7 +27,7 @@ import {
 
 import BarsIcon from "@patternfly/react-icons/dist/esm/icons/bars-icon";
 import QuestionCircleIcon from "@patternfly/react-icons/dist/esm/icons/question-circle-icon";
-import brandLogo from "/apicurio_primary_logo_black.svg";
+import brandLogo from "/apitomy_primary_logo_black.svg";
 import { ALL_DEMOS, Demo } from "./AllDemos.tsx";
 
 function App() {
