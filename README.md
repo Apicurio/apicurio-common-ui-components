@@ -1,3 +1,5 @@
+[![Verify Build Workflow](https://github.com/Apitomy/apitomy-common-ui-components/actions/workflows/verify.yaml/badge.svg)](https://github.com/Apitomy/apitomy-common-ui-components/actions/workflows/verify.yaml?query=branch%3Amain)
+
 # Apitomy Common UI Components
 This library contains some React + Patternfly UI components that are used across multiple Apitomy
 UI projects.
