@@ -70,3 +70,17 @@ If you are still on earlier versions, follow the appropriate upgrade guides firs
 ### Known Issues
 - Modal components use the deprecated Modal from PatternFly v6. This will be addressed in a future
   release.
+
+## Links
+
+- [npm Package](https://www.npmjs.com/package/@apitomy/common-ui-components)
+- [GitHub Repository](https://github.com/Apitomy/apitomy-common-ui-components)
+- [Apitomy Website](https://www.apitomy.io)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
+
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE).
