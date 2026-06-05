@@ -13,6 +13,13 @@
     "prHourlyLimit": 5,
     "packageRules": [
         {
+            "description": "Exclude peerDependencies from updates",
+            "matchDepTypes": [
+                "peerDependencies"
+            ],
+            "enabled": false
+        },
+        {
             "groupName": "Dependencies: Typescript",
             "matchFileNames": [
                 "package.json"
