@@ -36,7 +36,7 @@
     "@patternfly/react-core": "6.6.0",
     "@patternfly/react-icons": "6.6.0",
     "@patternfly/react-table": "6.6.0",
-    "@types/luxon": "3.7.2",
+    "@types/luxon": "3.7.3",
     "@types/node": "25.9.5",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
