@@ -7,7 +7,7 @@ import { useContext } from "react";
  * OIDC auth implementation
  ** ******************************** */
 
-const OIDC_CONFIG_OPTIONS: string[] = ["url", "clientId", "redirectUri", "scope", "logoutUrl", "loadUserInfo", "useStateBasedRedirect", "stateMaxAge", "onRedirect"];
+const OIDC_CONFIG_OPTIONS: string[] = ["url", "clientId", "redirectUri", "scope", "logoutUrl", "loadUserInfo", "useStateBasedRedirect", "stateMaxAge", "onRedirect", "useNonce"];
 const OIDC_DEFAULT_SCOPES = "openid profile email";
 const SESSION_STORAGE_PREFIX = "apitomy.oidc.state.";
 const OIDC_CALLBACK_PARAM_NAMES = ["state", "code", "error", "error_description", "error_uri", "session_state", "iss"];
@@ -260,15 +260,19 @@ async function oidc_beginLoginRedirect(): Promise<void> {
         storeRedirectLocation(stateId, currentLocation);
         console.debug(`[Auth] Stored redirect location in session storage: ${currentLocation}`);
 
-        return userManager?.signinRedirect({
-            nonce: crypto.randomUUID(),
-            state: { redirectStateId: stateId }
-        });
+        const signinArgs: any = { state: { redirectStateId: stateId } };
+        if (oidcConfigOptions.useNonce) {
+            signinArgs.nonce = crypto.randomUUID();
+        }
+        return userManager?.signinRedirect(signinArgs);
     }
 
-    return userManager?.signinRedirect({
-        nonce: crypto.randomUUID()
-    });
+    if (oidcConfigOptions.useNonce) {
+        return userManager?.signinRedirect({
+            nonce: crypto.randomUUID()
+        });
+    }
+    return userManager?.signinRedirect();
 }
 
 async function oidc_handleCallback(url: URL): Promise<void> {
