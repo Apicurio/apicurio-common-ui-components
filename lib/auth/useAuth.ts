@@ -261,11 +261,14 @@ async function oidc_beginLoginRedirect(): Promise<void> {
         console.debug(`[Auth] Stored redirect location in session storage: ${currentLocation}`);
 
         return userManager?.signinRedirect({
+            nonce: crypto.randomUUID(),
             state: { redirectStateId: stateId }
         });
     }
 
-    return userManager?.signinRedirect();
+    return userManager?.signinRedirect({
+        nonce: crypto.randomUUID()
+    });
 }
 
 async function oidc_handleCallback(url: URL): Promise<void> {
